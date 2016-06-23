@@ -1,0 +1,14 @@
+.site-title .header-image {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 16px;
+}
+
+@media screen and (min-width: 1024px){
+  .site-title .header-image {
+    vertical-align: top;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+}
