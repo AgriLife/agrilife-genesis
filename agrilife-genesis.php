@@ -14,54 +14,66 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'AGP_DIR_URL', plugin_dir_url( __FILE__ ) );
 
-add_theme_support( 'custom-header', array(
-  'width' => 100,
-  'height' => 100,
-  'header-text' => true
-));
+add_action( 'plugins_loaded', 'agp_add_theme_support' );
+function agp_add_theme_support(){
+
+  if( get_theme_mod( 'header_textcolor' ) != 'blank' ){
+    add_theme_support( 'custom-header', array(
+      'header-text' => true,
+      'height' => 100,
+      'width' => 100,
+    ));
+  } else {
+    add_theme_support( 'custom-header', array(
+      'header-text' => true,
+      'height' => 100,
+      'width' => 340,
+      'flex-height' => true,
+      'flex-width' => true,
+    ));
+  }
+
+  if( is_admin() ){
+
+    add_action( 'customize_register', 'agp_customizer', 99 );
+
+  }
+
+}
+
+// Add class to identify header content configuration
+add_filter( 'body_class', 'agp_body_class' );
+function agp_body_class($classes = ''){
+  if( empty( get_header_image() ) ){
+    // No header image
+    $classes[] = 'agp-header-noimage';
+  } else if( get_theme_mod( 'header_textcolor' ) == 'blank' ){
+    // No header text
+    $classes[] = 'agp-header-notitle';
+  }
+
+  return $classes;
+}
 
 // Replace Genesis function with modified version to suit our needs
-function agp_replace_genesis_custom_header_style(){
-  remove_action ('wp_head', 'genesis_custom_header_style' );
-  // Remove header image from background
-  add_action ( 'wp_head', 'agp_custom_header_style' );
-  // Add header image before site title
-  add_filter( 'genesis_seo_title', 'agp_insert_header_image', 11, 3 );
-}
 add_action( 'init', 'agp_replace_genesis_custom_header_style', 99 );
+function agp_replace_genesis_custom_header_style(){
 
-// Add custom styles
-function register_agp_styles() {
-  wp_register_style(
-    'agp-styles',
-    AGP_DIR_URL . '/styles.css',
-    array(),
-    '4.4.3',
-    'screen'
-  );
-}
-function enqueue_agp_styles(){
-  wp_enqueue_style( 'agp-styles' );
-}
-add_action( 'wp_enqueue_scripts', 'register_agp_styles' );
-add_action( 'wp_enqueue_scripts', 'enqueue_agp_styles' );
+  remove_action( 'wp_head', 'genesis_custom_header_style' );
 
-// Change option's label to make more sense
-function agp_customizer( $wp_customize ){
-  $wp_customize->get_control( 'display_header_text' )->label = "Display Site Title";
+  // Add header image to page before site title
+  add_filter( 'genesis_seo_title', 'agp_insert_header_image', 11, 3 );
+  
 }
-add_action( 'customize_register', 'agp_customizer', 99 );
-
-// Add Header Image to HTML
 function agp_insert_header_image( $title, $inside, $wrap ){
 
-  $header_image = get_header_image();
+  $header_image_url = get_header_image();
 
-  if ( !empty( $header_image ) ){
+  if ( !empty( $header_image_url ) ){
+    $header_html = '<a class="headerimage" href="%s"><img src="%s" alt="%s"></a>';
+    $header_image = sprintf( $header_html, trailingslashit( home_url() ), $header_image_url, get_bloginfo( 'title' ) );
 
-    $header_image = '<img class="header-image" src="' . $header_image . '">';
-
-    $title = str_replace( '>' . get_bloginfo( 'name' ) . '<', '>' . $header_image . get_bloginfo( 'name' ) . '<', $title);
+    $title = $header_image . $title;
 
   }
 
@@ -69,45 +81,29 @@ function agp_insert_header_image( $title, $inside, $wrap ){
 
 }
 
-function agp_custom_header_style(){
+// Change option's label to make more sense
+function agp_customizer( $wp_customize ){
 
-  // A modified copy of the genesis theme's header.php function we removed earlier
-  // Only difference is it doesn't output a background image for the header image
+  $wp_customize->get_control( 'display_header_text' )->label = "Display Site Title";
 
-    //* Do nothing if custom header not supported
-  if ( ! current_theme_supports( 'custom-header' ) )
-    return;
+}
 
-  //* Do nothing if user specifies their own callback
-  if ( get_theme_support( 'custom-header', 'wp-head-callback' ) )
-    return;
+add_action( 'wp_enqueue_scripts', 'register_agp_styles' );
+function register_agp_styles() {
 
-  $output = '';
+  wp_register_style(
+    'agp-styles',
+    AGP_DIR_URL . '/styles.css',
+    array(),
+    '',
+    'screen'
+  );
 
-  $header_image = get_header_image();
-  $text_color   = get_header_textcolor();
+}
 
-  //* If no options set, don't waste the output. Do nothing.
-  if ( empty( $header_image ) && ! display_header_text() && $text_color === get_theme_support( 'custom-header', 'default-text-color' ) )
-    return;
+add_action( 'wp_enqueue_scripts', 'enqueue_agp_styles' );
+function enqueue_agp_styles() {
 
-  $header_selector = get_theme_support( 'custom-header', 'header-selector' );
-  $title_selector  = genesis_html5() ? '.custom-header .site-title'       : '.custom-header #title';
-  $desc_selector   = genesis_html5() ? '.custom-header .site-description' : '.custom-header #description';
-
-  //* Header selector fallback
-  if ( ! $header_selector )
-    $header_selector = genesis_html5() ? '.custom-header .site-header' : '.custom-header #header';
-
-  //* Header image CSS, if exists
-  // if ( $header_image )
-  //   $output .= sprintf( '%s { background: url(%s) no-repeat !important; }', $header_selector, esc_url( $header_image ) );
-
-  //* Header text color CSS, if showing text
-  if ( display_header_text() && $text_color !== get_theme_support( 'custom-header', 'default-text-color' ) )
-    $output .= sprintf( '%2$s a, %2$s a:hover, %3$s { color: #%1$s !important; }', esc_html( $text_color ), esc_html( $title_selector ), esc_html( $desc_selector ) );
-
-  if ( $output )
-    printf( '<style type="text/css">%s</style>' . "\n", $output );
+  wp_enqueue_style( 'agp-styles' );
 
 }
