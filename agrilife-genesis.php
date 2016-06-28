@@ -14,6 +14,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'AGP_DIR_URL', plugin_dir_url( __FILE__ ) );
 
+// Add custom header support and options to Theme Customizer page in admin
 add_action( 'plugins_loaded', 'agp_add_theme_support' );
 function agp_add_theme_support(){
 
@@ -38,6 +39,13 @@ function agp_add_theme_support(){
     add_action( 'customize_register', 'agp_customizer', 99 );
 
   }
+
+}
+
+// Change option's label to make more sense
+function agp_customizer( $wp_customize ){
+
+  $wp_customize->get_control( 'display_header_text' )->label = "Display Site Title";
 
 }
 
@@ -70,8 +78,9 @@ function agp_replace_genesis_custom_header_style(){
 
   // Add header image to page before site title
   add_filter( 'genesis_seo_title', 'agp_insert_header_image', 11, 3 );
-  
+
 }
+
 function agp_insert_header_image( $title, $inside, $wrap ){
 
   $header_image_url = get_header_image();
@@ -88,13 +97,7 @@ function agp_insert_header_image( $title, $inside, $wrap ){
 
 }
 
-// Change option's label to make more sense
-function agp_customizer( $wp_customize ){
-
-  $wp_customize->get_control( 'display_header_text' )->label = "Display Site Title";
-
-}
-
+// Load CSS when a header image is used
 add_action( 'get_header', 'agp_check_styles' );
 function agp_check_styles(){
 
@@ -102,7 +105,7 @@ function agp_check_styles(){
     add_action( 'wp_enqueue_scripts', 'register_agp_styles' );
     add_action( 'wp_enqueue_scripts', 'enqueue_agp_styles' );
   }
-  
+
 }
 
 function register_agp_styles() {
