@@ -1,84 +1,60 @@
-.title-area {
+.site-header .title-area {
   text-align: center;
   margin-top: 28px;
-  overflow: visible;
-}
+  overflow: visible; }
+  .agp-header-notitle .site-header .title-area {
+    position: relative;
+    margin-top: 5px; }
+  .agp-header-outreach-pro-theme .site-header .title-area {
+    padding-top: 0; }
+  @media screen and (min-width: 1024px) {
+    .site-header .title-area {
+      margin-top: 18px;
+      overflow: visible;
+      position: relative;
+      z-index: 2;
+      text-align: left; } }
+  .site-header .title-area .site-title {
+    margin-bottom: 0; }
+    .agp-header-notitle .site-header .title-area .site-title {
+      position: absolute;
+      left: 0;
+      z-index: 1; }
+    @media screen and (min-width: 1024px) {
+      .site-header .title-area .site-title {
+        width: 215px;
+        display: inline-block;
+        margin-top: 5px;
+        text-align: left; } }
+    @media screen and (min-width: 1201px) {
+      .site-header .title-area .site-title {
+        width: 215px; } }
+    .site-header .title-area .site-title a,
+    .site-header .title-area .site-title a:hover {
+      background-image: none;
+      padding-top: 0; }
 .site-header .headerimage,
-.title-area .site-title {
+.site-header .title-area .site-title {
   display: inline-block;
-  vertical-align: middle;
-}
+  vertical-align: middle; }
 .site-header .headerimage {
   margin-right: 16px;
-}
-.title-area .site-title {
-  margin-bottom: 0;
-}
-.title-area .site-title a,
-.title-area .site-title a:hover {
-  background-image: none;
-  padding-top: 0;
-}
-@media screen and (min-width: 1024px){
-  .title-area {
-    margin-top: 18px;
-  }
-  .site-header .headerimage {
-    vertical-align: top;
-    float: left;
-    margin: 0 5px 5px 0;
-  }
-  .site-title {
-    width: 215px;
-    display: inline-block;
-    margin-top: 5px;
-    text-align: left;
-  }
-  .site-header .title-area {
-    overflow: visible;
+  margin-left: 16px; }
+  .agp-header-notitle .site-header .headerimage {
+    margin-right: 0;
     position: relative;
-    z-index: 2;
-  }
+    z-index: 2; }
+    @media screen and (min-width: 1024px) {
+      .agp-header-notitle .site-header .headerimage {
+        margin-right: 0px; } }
+  @media screen and (min-width: 1024px) {
+    .site-header .headerimage {
+      vertical-align: top;
+      float: left;
+      margin: 0 10px 5px 0; }
+      .agp-header-executive-pro-theme .site-header .headerimage {
+        margin-right: 5px; } }
+@media screen and (min-width: 1024px) {
   .site-header .header-widget-area {
     position: relative;
-    z-index: 1;
-  }
-}
-@media screen and (max-width: 1200px){
-  .site-title {
-    width: 155px;
-  }
-}
-@media screen and (min-width: 1201px){
-  .site-title {
-    width: 215px;
-  }
-}
-/* No header image */
-.agp-header-noimage .site-title {
-  width: 100%;
-  margin-top: 0;
-}
-/* No header title */
-.agp-header-notitle.header-image .site-header .title-area {
-  position: relative;
-  margin-top: 5px;
-}
-.agp-header-notitle .site-header .headerimage {
-  margin-right: 0;
-}
-.agp-header-notitle .site-title {
-  position: absolute;
-  left: 0;
-  z-index: 1;
-}
-.agp-header-notitle .site-header .headerimage {
-  margin-right: 0px;
-  position: relative;
-  z-index: 2;
-}
-@media screen and (min-width: 1024px){
-  .agp-header-notitle .site-header .headerimage {
-    margin-right: 0px;
-  }
-}
+    z-index: 1; } }

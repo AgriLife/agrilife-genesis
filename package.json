@@ -1,0 +1,20 @@
+{
+  "name": "agrilife-genesis",
+  "version": "1.0.0",
+  "description": "Extended functionality for Genesis child themes provided by AgriLife Communications",
+  "main": "agrilife-genesis.php",
+  "scripts": {
+    "build": "sass styles.scss styles.css",
+    "watch": "sass --watch styles.scss:styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AgriLife/agrilife-genesis.git"
+  },
+  "author": "Zachary Watkins",
+  "license": "GPL2+",
+  "bugs": {
+    "url": "https://github.com/AgriLife/agrilife-genesis/issues"
+  },
+  "homepage": "https://github.com/AgriLife/agrilife-genesis"
+}
