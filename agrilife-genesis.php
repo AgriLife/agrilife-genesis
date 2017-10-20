@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: AgriLife Genesis
- * Plugin URI: 
+ * Plugin URI:
  * Description: Extended functionality for Genesis child themes provided by AgriLife Communications
  * Version: 1.0
  * Author: Zach Watkins
@@ -52,7 +52,7 @@ function agp_customizer( $wp_customize ){
 // Add class to identify header content configuration
 add_filter( 'body_class', 'agp_body_class' );
 function agp_body_class($classes = ''){
-  
+
   if( empty( get_header_image() ) ){
     // No header image
     $classes[] = 'agp-header-noimage';
@@ -101,18 +101,28 @@ function agp_insert_header_image( $title, $inside, $wrap ){
 add_action( 'get_header', 'agp_check_styles' );
 function agp_check_styles(){
 
+  $theme = wp_get_theme();
+
+  if(strpos(wp_get_theme(), 'Outreach Pro') !== false){
+    add_action( 'wp_enqueue_scripts', 'agp_register_op_styles' );
+    add_action( 'wp_enqueue_scripts', 'agp_enqueue_op_styles' );
+  } else if(strpos(wp_get_theme(), 'Executive Pro') !== false){
+    add_action( 'wp_enqueue_scripts', 'agp_register_ep_styles' );
+    add_action( 'wp_enqueue_scripts', 'agp_enqueue_ep_styles' );
+  }
+
   if( !empty( get_header_image() ) ){
-    add_action( 'wp_enqueue_scripts', 'register_agp_styles' );
-    add_action( 'wp_enqueue_scripts', 'enqueue_agp_styles' );
+    add_action( 'wp_enqueue_scripts', 'agp_register_header_styles' );
+    add_action( 'wp_enqueue_scripts', 'agp_enqueue_header_styles' );
   }
 
 }
 
-function register_agp_styles() {
+function agp_register_header_styles() {
 
   wp_register_style(
     'agp-styles',
-    AGP_DIR_URL . '/styles.css',
+    AGP_DIR_URL . '/css/styles.css',
     array(),
     '',
     'screen'
@@ -120,8 +130,67 @@ function register_agp_styles() {
 
 }
 
-function enqueue_agp_styles() {
+function agp_enqueue_header_styles() {
 
   wp_enqueue_style( 'agp-styles' );
+
+}
+
+function agp_register_ep_styles() {
+
+  wp_register_style(
+    'agp-ep-styles',
+    AGP_DIR_URL . '/css/styles_executive-pro.css',
+    array(),
+    '',
+    'screen'
+  );
+
+}
+
+function agp_enqueue_ep_styles() {
+
+  wp_enqueue_style( 'agp-ep-styles' );
+
+}
+
+function agp_register_op_styles() {
+
+  wp_register_style(
+    'agp-op-styles',
+    AGP_DIR_URL . '/css/styles_outreach-pro.css',
+    array(),
+    '',
+    'screen'
+  );
+
+}
+
+function agp_enqueue_op_styles() {
+
+  wp_enqueue_style( 'agp-op-styles' );
+
+}
+
+// Add theme support for color variations
+add_action('admin_init', 'agp_add_color_variations');
+function agp_add_color_variations(){
+
+  $colors = get_theme_support('genesis-style-selector')[0];
+
+  if(strpos(wp_get_theme(), 'Outreach Pro') !== false){
+
+    $colors['outreach-pro-maroon'] = __( 'Outreach Pro Texas A&M Maroon', 'outreach' );
+    $colors['outreach-pro-extensionunit'] = __( 'Outreach Pro AgriLife Extension Unit', 'extensionunit' );
+
+    add_theme_support( 'genesis-style-selector', $colors );
+
+  } else if(strpos(wp_get_theme(), 'Executive Pro') !== false){
+
+    $colors['executive-pro-maroon'] = __( 'Executive Pro Texas A&M Maroon', 'executive' );
+
+    add_theme_support( 'genesis-style-selector', $colors );
+
+  }
 
 }
