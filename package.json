@@ -16,11 +16,11 @@
   "homepage": "https://github.com/AgriLife/agrilife-genesis",
   "dependencies": {
     "curlrequest": "~0.3.10",
-    "grunt": "~0.4.0",
+    "grunt": "^0.4.5",
     "grunt-contrib-compass": "~0.6.0",
     "grunt-contrib-compress": "~1.3.0",
     "grunt-gh-release": "0.0.2",
-    "grunt-sass-lint": "~0.2.0",
+    "grunt-sass-lint": "^0.2.4",
     "underscore": "~1.8.3"
   },
   "devDependencies": {},
