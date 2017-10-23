@@ -1,6 +1,11 @@
 module.exports = (grunt) ->
   @initConfig
     pkg: @file.readJSON('package.json')
+    watch:
+      files: [
+        'css/src/*.scss'
+      ]
+      tasks: ['sasslint', 'compass:dev']
     compass:
       pkg:
         options:
@@ -44,7 +49,10 @@ module.exports = (grunt) ->
           'Content-Type': 'application/zip'
 
   @loadNpmTasks 'grunt-contrib-compass'
+  @loadNpmTasks 'grunt-contrib-compress'
+  @loadNpmTasks 'grunt-gh-release'
   @loadNpmTasks 'grunt-sass-lint'
+  @loadNpmTasks 'grunt-contrib-watch'
 
   @registerTask 'default', ['compass:pkg']
   @registerTask 'develop', ['sasslint', 'compass:dev']
@@ -77,3 +85,6 @@ module.exports = (grunt) ->
       done(err)
       return
     return
+
+  @event.on 'watch', (action, filepath) =>
+    @log.writeln('#{filepath} has #{action}')
