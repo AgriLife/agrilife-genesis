@@ -1,6 +1,6 @@
 {
   "name": "agrilife-genesis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extended functionality for Genesis child themes provided by AgriLife Communications",
   "main": "agrilife-genesis.php",
   "repository": "https://github.com/agrilife/agrilife-genesis",

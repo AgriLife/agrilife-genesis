@@ -98,18 +98,8 @@ function agp_insert_header_image( $title, $inside, $wrap ){
 }
 
 // Load CSS when a header image is used
-add_action( 'get_header', 'agp_check_styles' );
-function agp_check_styles(){
-
-  $theme = wp_get_theme();
-
-  if(strpos(wp_get_theme(), 'Outreach Pro') !== false){
-    add_action( 'wp_enqueue_scripts', 'agp_register_op_styles' );
-    add_action( 'wp_enqueue_scripts', 'agp_enqueue_op_styles' );
-  } else if(strpos(wp_get_theme(), 'Executive Pro') !== false){
-    add_action( 'wp_enqueue_scripts', 'agp_register_ep_styles' );
-    add_action( 'wp_enqueue_scripts', 'agp_enqueue_ep_styles' );
-  }
+add_action( 'get_header', 'agp_check_header_styles' );
+function agp_check_header_styles(){
 
   if( !empty( get_header_image() ) ){
     add_action( 'wp_enqueue_scripts', 'agp_register_header_styles' );
@@ -121,8 +111,8 @@ function agp_check_styles(){
 function agp_register_header_styles() {
 
   wp_register_style(
-    'agp-styles',
-    AGP_DIR_URL . '/css/styles.css',
+    'agp-header-styles',
+    AGP_DIR_URL . '/css/styles_headerimage.css',
     array(),
     '',
     'screen'
@@ -132,43 +122,46 @@ function agp_register_header_styles() {
 
 function agp_enqueue_header_styles() {
 
-  wp_enqueue_style( 'agp-styles' );
+  wp_enqueue_style( 'agp-header-styles' );
 
 }
 
-function agp_register_ep_styles() {
+// Add styles dependent on Genesis theme
+add_action( 'wp_enqueue_scripts', 'agp_register_theme_styles' );
+function agp_register_theme_styles(){
 
-  wp_register_style(
-    'agp-ep-styles',
-    AGP_DIR_URL . '/css/styles_executive-pro.css',
-    array(),
-    '',
-    'screen'
-  );
+  $theme = wp_get_theme();
 
-}
-
-function agp_enqueue_ep_styles() {
-
-  wp_enqueue_style( 'agp-ep-styles' );
-
-}
-
-function agp_register_op_styles() {
-
-  wp_register_style(
-    'agp-op-styles',
-    AGP_DIR_URL . '/css/styles_outreach-pro.css',
-    array(),
-    '',
-    'screen'
-  );
+  if(strpos(wp_get_theme(), 'Outreach Pro') !== false){
+    wp_register_style(
+      'agp-op-styles',
+      AGP_DIR_URL . 'css/styles_outreach-pro.css',
+      array(),
+      '',
+      'screen'
+    );
+  } else if(strpos(wp_get_theme(), 'Executive Pro') !== false){
+    wp_register_style(
+      'agp-ep-styles',
+      AGP_DIR_URL . 'css/styles_executive-pro.css',
+      array(),
+      '',
+      'screen'
+    );
+  }
 
 }
 
-function agp_enqueue_op_styles() {
+add_action( 'wp_enqueue_scripts', 'agp_enqueue_theme_styles' );
+function agp_enqueue_theme_styles(){
 
-  wp_enqueue_style( 'agp-op-styles' );
+  $theme = wp_get_theme();
+
+  if(strpos(wp_get_theme(), 'Outreach Pro') !== false){
+    wp_enqueue_style( 'agp-op-styles' );
+  } else if(strpos(wp_get_theme(), 'Executive Pro') !== false){
+    wp_enqueue_style( 'agp-ep-styles' );
+  }
 
 }
 
