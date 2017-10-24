@@ -1,4 +1,7 @@
-.site-inner a,
-.home-bottom a {
-	text-decoration: underline;
+.site-inner,
+.home-bottom,
+.footer-widgets {
+	a {
+		text-decoration: underline;
+	}
 }
