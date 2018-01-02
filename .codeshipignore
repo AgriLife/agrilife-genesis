@@ -44,9 +44,8 @@ Thumbs.db
 
 # Don't deploy
 package.json
-bower.json
-.bower.json
-.bowerrc
+known-issues.json
+vipscan.json
 config.rb
 node_modules
 .sass-cache
@@ -65,4 +64,4 @@ werker.yml
 css/src
 
 # Ignore release file
-AgriFlex3.zip
+agrilife-genesis.zip
