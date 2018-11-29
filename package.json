@@ -1,7 +1,7 @@
 {
   "name": "agrilife-genesis",
   "version": "1.0.4",
-  "description": "Extended functionality for Genesis child themes provided by AgriLife Communications",
+  "description": "Extended functionality for Genesis child themes: Executive Pro, or Outreach Pro",
   "main": "agrilife-genesis.php",
   "repository": "https://github.com/agrilife/agrilife-genesis",
   "author": "Zachary Watkins",
