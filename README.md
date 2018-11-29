@@ -3,6 +3,7 @@
 ## WordPress Requirements
 
 1. Genesis theme
+2. Genesis child theme: Executive Pro, or Outreach Pro
 
 ## Installation
 
