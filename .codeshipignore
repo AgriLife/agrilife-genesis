@@ -44,10 +44,9 @@ Thumbs.db
 
 # Don't deploy
 package.json
-known-issues.json
-vipscan.json
 config.rb
 node_modules
+vendor
 .sass-cache
 *.md
 *.txt
