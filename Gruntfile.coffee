@@ -18,6 +18,25 @@ module.exports = (grunt) ->
           outputStyle: 'expanded'
           sourcemap: true
           noLineComments: true
+    sass:
+      pkg:
+        options:
+          sourcemap: 'none'
+          style: 'compressed'
+          precision: 2
+        files:
+          'css/styles_executive-pro.css': 'css/src/styles_executive-pro.scss'
+          'css/styles_outreach-pro.css':  'css/src/styles_outreach-pro.scss'
+          'css/styles_headerimage.css':   'css/src/styles_headerimage.scss'
+      dev:
+        options:
+          style: 'expanded'
+          precision: 2
+          trace: true
+        files:
+          'css/styles_executive-pro.css': 'css/src/styles_executive-pro.scss'
+          'css/styles_outreach-pro.css':  'css/src/styles_outreach-pro.scss'
+          'css/styles_headerimage.css':   'css/src/styles_headerimage.scss'
     sasslint:
       options:
         configFile: '.sass-lint.yml'
@@ -32,14 +51,13 @@ module.exports = (grunt) ->
           {src: ['README.md']}
         ]
 
-  @loadNpmTasks 'grunt-contrib-compass'
+  @loadNpmTasks 'grunt-contrib-sass'
   @loadNpmTasks 'grunt-contrib-compress'
   @loadNpmTasks 'grunt-sass-lint'
   @loadNpmTasks 'grunt-contrib-watch'
 
-  @registerTask 'default', ['compass:pkg']
-  @registerTask 'develop', ['sasslint', 'compass:dev']
-  @registerTask 'package', ['compass:pkg']
+  @registerTask 'default', ['sass:pkg']
+  @registerTask 'develop', ['sasslint', 'sass:dev']
   @registerTask 'release', ['compress', 'makerelease']
   @registerTask 'makerelease', 'Set release branch for use in the release task', ->
     done = @async()
