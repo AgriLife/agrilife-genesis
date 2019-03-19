@@ -1,8 +1,14 @@
 {
   "name": "agrilife-genesis",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Extended functionality for Genesis child themes: Executive Pro, or Outreach Pro",
   "main": "agrilife-genesis.php",
+  "scripts": {
+    "start": "composer install && npm install && grunt",
+    "checkwp": "npm run configphpcs && npm run checkphp",
+    "configphpcs": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "checkphp": "vendor/bin/phpcs --standard=WordPress --report=source ./*.php && vendor/bin/phpcs --standard=WordPress ./*.php"
+  },
   "repository": "https://github.com/agrilife/agrilife-genesis",
   "author": "Zachary Watkins",
   "license": "GPL-2.0+",
