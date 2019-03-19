@@ -3,10 +3,12 @@
 		text-align: center;
 		margin-top: 28px;
 		overflow: visible;
+
 		.agp-header-notitle & {
 			position: relative;
 			margin-top: 5px;
 		}
+
 		.agp-header-outreach-pro-theme & {
 			padding-top: 0;
 		}
@@ -21,6 +23,7 @@
 
 		.site-title {
 			margin-bottom: 0;
+
 			.agp-header-notitle & {
 				position: absolute;
 				left: 0;
@@ -33,9 +36,7 @@
 				margin-top: 5px;
 				text-align: left;
 			}
-			@media screen and (max-width: 1200px) {
-				// width: 155px;
-			}
+
 			@media screen and (min-width: 1201px) {
 				width: 215px;
 			}
@@ -47,18 +48,22 @@
 			}
 		}
 	}
+
 	.headerimage,
 	.title-area .site-title {
 		display: inline-block;
 		vertical-align: middle;
 	}
+
 	.headerimage {
 		margin-right: 16px;
 		margin-left: 16px;
+
 		.agp-header-notitle & {
 			margin-right: 0;
 			position: relative;
 			z-index: 2;
+
 			@media screen and (min-width: 1024px) {
 				margin-right: 0px;
 			}
@@ -68,11 +73,13 @@
 			vertical-align: top;
 			float: left;
 			margin: 0 10px 5px 0;
+
 			.agp-header-executive-pro-theme & {
 				margin-right: 5px;
 			}
 		}
 	}
+
 	@media screen and (min-width: 1024px) {
 		.header-widget-area {
 			position: relative;

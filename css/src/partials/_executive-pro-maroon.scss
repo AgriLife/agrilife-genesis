@@ -1,71 +1,71 @@
-
 /* Executive Pro Texas A&M Maroon
 --------------------------------------------- */
+.executive-pro-maroon {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	a,
+	.entry-title a:hover,
+	.footer-widgets .entry-title a:hover {
+		color: #500000;
+	}
 
-.executive-pro-maroon h1,
-.executive-pro-maroon h2,
-.executive-pro-maroon h3,
-.executive-pro-maroon h4,
-.executive-pro-maroon h5,
-.executive-pro-maroon a,
-.executive-pro-maroon .entry-title a:hover,
-.executive-pro-maroon .footer-widgets .entry-title a:hover {
-	color: #500000;
-}
+	.entry-content a {
+		text-decoration: underline;
+	}
 
-.executive-pro-maroon .entry-content a {
-	text-decoration: underline;
-}
+	.genesis-nav-menu a {
+		color: #666;
+	}
 
-.executive-pro-maroon .genesis-nav-menu a {
-	color: #666;
-}
+	.entry-title a,
+	.site-title a,
+	.site-title a:hover,
+	.site-footer a {
+		color: #222;
+	}
 
-.executive-pro-maroon .entry-title a,
-.executive-pro-maroon .site-title a,
-.executive-pro-maroon .site-title a:hover,
-.executive-pro-maroon .site-footer a {
-	color: #222;
-}
+	.content .entry-header .entry-meta .entry-comments-link a,
+	.footer-widgets a,
+	.genesis-nav-menu .current-menu-item > a,
+	.genesis-nav-menu a:active,
+	.slide-excerpt-border a,
+	a.button {
+		color: #FFF;
+	}
 
-.executive-pro-maroon .content .entry-header .entry-meta .entry-comments-link a,
-.executive-pro-maroon .footer-widgets a,
-.executive-pro-maroon .genesis-nav-menu .current-menu-item > a,
-.executive-pro-maroon .genesis-nav-menu a:active,
-.executive-pro-maroon .slide-excerpt-border a,
-.executive-pro-maroon a.button {
-	color: #FFF;
-}
+	.comment-header .comment-meta a,
+	.comment-metadata a {
+		color: #BBB;
+	}
 
-.executive-pro-maroon .comment-header .comment-meta a,
-.executive-pro-maroon .comment-metadata a {
-	color: #BBB;
-}
+	.enews-widget input[type="submit"],
+	.content .entry-header .entry-meta .entry-comments-link,
+	.genesis-nav-menu .current-menu-item > a,
+	.archive-pagination li a {
+		background-color: #500000;
+	}
 
-.executive-pro-maroon .enews-widget input[type="submit"],
-.executive-pro-maroon .content .entry-header .entry-meta .entry-comments-link,
-.executive-pro-maroon .genesis-nav-menu .current-menu-item > a,
-.executive-pro-maroon .archive-pagination li a {
-	background-color: #500000;
-}
+	.archive-pagination li a:hover,
+	.archive-pagination li.active a {
+		background-color: #590101;
+	}
 
-.executive-pro-maroon .archive-pagination li a:hover,
-.executive-pro-maroon .archive-pagination li.active a {
-	background-color: #590101;
-}
+	a.button,
+	button,
+	input[type="button"],
+	input[type="reset"],
+	input[type="submit"] {
+		background-color: #670000;
+	}
 
-.executive-pro-maroon a.button,
-.executive-pro-maroon button,
-.executive-pro-maroon input[type="button"],
-.executive-pro-maroon input[type="reset"],
-.executive-pro-maroon input[type="submit"] {
-	background-color: #670000;
-}
-
-.executive-pro-maroon a:hover.button,
-.executive-pro-maroon button:hover,
-.executive-pro-maroon input:hover[type="button"],
-.executive-pro-maroon input:hover[type="reset"],
-.executive-pro-maroon input:hover[type="submit"] {
-	background-color: #7F0000;
+	a:hover.button,
+	button:hover,
+	input:hover[type="button"],
+	input:hover[type="reset"],
+	input:hover[type="submit"] {
+		background-color: #7F0000;
+	}
 }
