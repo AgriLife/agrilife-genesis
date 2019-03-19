@@ -1,24 +1,42 @@
 <?php
 /**
- * Plugin Name: AgriLife Genesis
- * Plugin URI:
- * Description: Extended functionality for Genesis child themes provided by AgriLife Communications
- * Version: 1.0
- * Author: Zach Watkins
- * Author URI: http://github.com/ZachWatkins
+ * AgriLife Genesis
+ *
+ * @package      AgriLife Genesis
+ * @author       Zachary Watkins
+ * @copyright    2018 Texas A&M AgriLife Communications
+ * @license      GPL-2.0+
+ *
+ * @wordpress-plugin
+ * Plugin Name:  AgriLife Genesis
+ * Plugin URI:   https://github.com/AgriLife/agrilife-genesis
+ * Description:  Extended functionality for Genesis child themes provided by AgriLife Communications
+ * Version:      1.0.7
+ * Author:       Zachary Watkins
+ * Author URI:   https://github.com/ZachWatkins
  * Author Email: zachary.watkins@ag.tamu.edu
- * License: GPL2+
+ * Text Domain:  agrilife-genesis
+ * License:      GPL-2.0+
+ * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
 define( 'AGP_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'AGP_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
-// Add custom header support and options to Theme Customizer page in admin
+// Add custom header support and options to Theme Customizer page in admin.
 add_action( 'plugins_loaded', 'agp_add_theme_support' );
+
+/**
+ * Add theme support for custom headers.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_add_theme_support() {
 
-	if ( get_theme_mod( 'header_textcolor' ) != 'blank' ) {
+	if ( get_theme_mod( 'header_textcolor' ) !== 'blank' ) {
 		add_theme_support(
 			'custom-header',
 			array(
@@ -48,25 +66,36 @@ function agp_add_theme_support() {
 
 }
 
-// Change option's label to make more sense
+/**
+ * Change option's label to make more sense
+ *
+ * @since 0.1.0
+ * @param object $wp_customize The customizer object.
+ * @return void
+ */
 function agp_customizer( $wp_customize ) {
 
 	$wp_customize->get_control( 'display_header_text' )->label = 'Display Site Title';
 
 }
 
-// Add class to identify header content configuration
-add_filter( 'body_class', 'agp_body_class' );
+/**
+ * Add class to identify header content configuration
+ *
+ * @since 0.1.0
+ * @param mixed $classes The class array.
+ * @return array
+ */
 function agp_body_class( $classes = '' ) {
 
 	if ( empty( get_header_image() ) ) {
-		// No header image
+		// No header image.
 		$classes[] = 'agp-header-noimage';
 	} else {
 		$classes[] = 'agp-header-image';
 	}
-	if ( get_theme_mod( 'header_textcolor' ) == 'blank' ) {
-		// No header text
+	if ( get_theme_mod( 'header_textcolor' ) === 'blank' ) {
+		// No header text.
 		$classes[] = 'agp-header-notitle';
 	}
 	if ( defined( 'CHILD_THEME_NAME' ) ) {
@@ -75,18 +104,33 @@ function agp_body_class( $classes = '' ) {
 
 	return $classes;
 }
+add_filter( 'body_class', 'agp_body_class' );
 
-// Replace Genesis function with modified version to suit our needs
-add_action( 'init', 'agp_replace_genesis_custom_header_style', 99 );
+/**
+ * Replace Genesis function with modified version to suit our needs.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_replace_genesis_custom_header_style() {
 
 	remove_action( 'wp_head', 'genesis_custom_header_style' );
 
-	// Add header image to page before site title
+	// Add header image to page before site title.
 	add_filter( 'genesis_seo_title', 'agp_insert_header_image', 11, 3 );
 
 }
+add_action( 'init', 'agp_replace_genesis_custom_header_style', 99 );
 
+/**
+ * Add custom header image to html.
+ *
+ * @since 0.1.0
+ * @param string $title  The title text.
+ * @param string $inside The inner html.
+ * @param string $wrap   The wrapper element tag.
+ * @return string
+ */
 function agp_insert_header_image( $title, $inside, $wrap ) {
 
 	$header_image_url = get_header_image();
@@ -103,8 +147,12 @@ function agp_insert_header_image( $title, $inside, $wrap ) {
 
 }
 
-// Load CSS when a header image is used
-add_action( 'get_header', 'agp_check_header_styles' );
+/**
+ * Load CSS when a header image is used
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_check_header_styles() {
 
 	if ( ! empty( get_header_image() ) ) {
@@ -113,27 +161,44 @@ function agp_check_header_styles() {
 	}
 
 }
+add_action( 'get_header', 'agp_check_header_styles' );
 
+/**
+ * Register header styles.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_register_header_styles() {
 
 	wp_register_style(
 		'agp-header-styles',
 		AGP_DIR_URL . '/css/styles_headerimage.css',
 		array(),
-		'',
+		filemtime( AGP_DIR_PATH . '/css/styles_headerimage.css' ),
 		'screen'
 	);
 
 }
 
+/**
+ * Enqueue header styles.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_enqueue_header_styles() {
 
 	wp_enqueue_style( 'agp-header-styles' );
 
 }
 
-// Add styles dependent on Genesis theme
-add_action( 'wp_enqueue_scripts', 'agp_register_theme_styles' );
+/**
+ * Add styles dependent on Genesis theme.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_register_theme_styles() {
 
 	$theme = wp_get_theme();
@@ -143,7 +208,7 @@ function agp_register_theme_styles() {
 			'agp-op-styles',
 			AGP_DIR_URL . 'css/styles_outreach-pro.css',
 			array(),
-			'',
+			filemtime( AGP_DIR_PATH . '/css/styles_outreach-pro.css' ),
 			'screen'
 		);
 	} elseif ( strpos( wp_get_theme(), 'Executive Pro' ) !== false ) {
@@ -151,14 +216,20 @@ function agp_register_theme_styles() {
 			'agp-ep-styles',
 			AGP_DIR_URL . 'css/styles_executive-pro.css',
 			array(),
-			'',
+			filemtime( AGP_DIR_PATH . '/css/styles_executive-pro.css' ),
 			'screen'
 		);
 	}
 
 }
+add_action( 'wp_enqueue_scripts', 'agp_register_theme_styles' );
 
-add_action( 'wp_enqueue_scripts', 'agp_enqueue_theme_styles' );
+/**
+ * Enqueue color variation styles.
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_enqueue_theme_styles() {
 
 	$theme = wp_get_theme();
@@ -170,9 +241,14 @@ function agp_enqueue_theme_styles() {
 	}
 
 }
+add_action( 'wp_enqueue_scripts', 'agp_enqueue_theme_styles' );
 
-// Add theme support for color variations
-add_action( 'admin_init', 'agp_add_color_variations' );
+/**
+ * Add theme support for color variations
+ *
+ * @since 0.1.0
+ * @return void
+ */
 function agp_add_color_variations() {
 
 	$colors = get_theme_support( 'genesis-style-selector' )[0];
@@ -193,3 +269,4 @@ function agp_add_color_variations() {
 	}
 
 }
+add_action( 'admin_init', 'agp_add_color_variations' );
