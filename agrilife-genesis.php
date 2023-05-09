@@ -250,23 +250,31 @@ add_action( 'wp_enqueue_scripts', 'agp_enqueue_theme_styles' );
  * @return void
  */
 function agp_add_color_variations() {
+    
+    $genesisStyleSelector = get_theme_support( 'genesis-style-selector' );
 
-	$colors = get_theme_support( 'genesis-style-selector' )[0];
+    if ( isset( $genesisStyleSelector[0] ) ) {
 
-	if ( strpos( wp_get_theme(), 'Outreach Pro' ) !== false ) {
+        $colors = $genesisStyleSelector[0];
 
-		$colors['outreach-pro-maroon']        = __( 'Outreach Pro Texas A&M Maroon', 'outreach' );
-		$colors['outreach-pro-extensionunit'] = __( 'Outreach Pro AgriLife Extension Unit', 'extensionunit' );
+        if ( strpos( wp_get_theme()->Name, 'Outreach Pro' ) !== false ) {
 
-		add_theme_support( 'genesis-style-selector', $colors );
+            $colors['outreach-pro-maroon']        = __( 'Outreach Pro Texas A&M Maroon', 'outreach' );
+            $colors['outreach-pro-extensionunit'] = __( 'Outreach Pro AgriLife Extension Unit', 'extensionunit' );
 
-	} elseif ( strpos( wp_get_theme(), 'Executive Pro' ) !== false ) {
+            add_theme_support( 'genesis-style-selector', $colors );
 
-		$colors['executive-pro-maroon'] = __( 'Executive Pro Texas A&M Maroon', 'executive' );
+        } elseif ( strpos( wp_get_theme()->Name, 'Executive Pro' ) !== false ) {
 
-		add_theme_support( 'genesis-style-selector', $colors );
+            $colors['executive-pro-maroon'] = __( 'Executive Pro Texas A&M Maroon', 'executive' );
 
-	}
+            add_theme_support( 'genesis-style-selector', $colors );
+
+        }
+
+    }
 
 }
-add_action( 'admin_init', 'agp_add_color_variations' );
+
+add_action( 'after_setup_theme', 'agp_add_color_variations' );
+
